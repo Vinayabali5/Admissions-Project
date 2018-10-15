@@ -1,0 +1,168 @@
+2015-02-09 12:21:44.385 ERROR 1359 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:22:01.242 ERROR 1384 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:22:18.269 ERROR 1464 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:24:14.525 ERROR 1509 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:24:43.790 ERROR 1560 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:26:13.026 ERROR 1632 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:26:30.085 ERROR 1674 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:28:00.970 ERROR 1936 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:29:12.519 ERROR 2081 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:35:20.902 ERROR 2740 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:37:18.717 ERROR 3177 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+
+2015-02-09 12:38:38.321 ERROR 3406 [main] --- uk.ac.reigate.CISApplication             : Application startup failed
+
+java.lang.IllegalArgumentException: Invalid source 'uk.ac.reigate.AdmissionMain'
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:223)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:144)
+	at org.springframework.boot.BeanDefinitionLoader.load(BeanDefinitionLoader.java:127)
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:620)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication$run.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at uk.ac.reigate.AdmissionsMain.main(AdmissionsMain.groovy:14)
+

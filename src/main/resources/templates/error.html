@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form</title>
+<script th:replace="fragments/form :: form-javascript"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div>
+			<h2>An Error Occurred:</h2>
+			<p th:text="${url}">/SomeURL/</p>
+			<p th:text="${message}">Message about exception here...</p>
+			<p th:text="${ex}">Message about exception here...</p>
+		</div>
+	</div>
+
+</body>
+</html>

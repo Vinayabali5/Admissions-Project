@@ -1,0 +1,28 @@
+# This are the default settings that apply to all profiles 
+app:
+  name: cid-admissions
+spring:
+  thymeleaf:
+    checkTemplateLocation: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    locale: en_GB
+    time-zone: Europe/London
+  pid:
+    file: cis-admissions.pid
+  data:
+    rest:
+      basePath: /api/resources
+
+beanlogger: 
+  enabled: false
+
+logging: 
+  level:
+    uk.ac.reigate: DEBUG

@@ -1,0 +1,8 @@
+server: 
+    port: 10201
+
+  
+spring:
+    jpa:
+        show_sql: false
+  

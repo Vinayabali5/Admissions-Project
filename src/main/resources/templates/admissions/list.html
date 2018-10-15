@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+<link type="text/css" rel="stylesheet" href="/css/appListPagination.css"/>
+<script type="text/javascript" src="/js/appListPagination.js"></script>
+<script type="text/javascript" src="/js/applicationList.js"></script>
+<script type="text/javascript" src="/js/deleteApplication.js"></script>
+<script th:replace="fragments/form :: form-javascript"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div>
+			<span th:text="${message}"></span>
+		</div>
+<div>
+		<table id='content' class="table table-bordered table-hover table-condensed">
+			<thead> 
+				<th>Ref</th>
+				<th>Person</th>
+				<th>Status</th>
+			</thead>
+			<tbody>
+			<tr class="page" th:each="app : ${applications}">
+				<td><a href="#" th:href="@{/application/edit/__${app.id}__}" th:text="${app.referenceNo}"></a></td>
+				<td th:text="${app.person}"></td>
+				<td th:text="${app.status}"></td>
+			</tr>
+			</tbody>
+		</table>
+<div id ="pagination" class="pagination-page"></div>
+</div>
+	</div>
+</body>
+</html>

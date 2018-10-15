@@ -1,0 +1,11 @@
+# These are the deault setting for the production environment
+
+server:
+  port: 10109
+ 
+spring:
+  pid:
+    file: prod.pid
+ 
+beanlogger:
+  enabled: false

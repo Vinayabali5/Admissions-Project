@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+    <title>HTML Version</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div layout:fragment="content">
+    	<p th:text="'Hello, ' + ${name} + '!'"></p>
+    </div>
+</body>
+</html>
+

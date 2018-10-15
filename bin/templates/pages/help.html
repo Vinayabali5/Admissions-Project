@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div>
+            <span th:text="${message}"></span>
+        </div>
+        <div class="contanier">
+            <div class="row"><h1>Welcome to the CID Admissions Help Pages</h1></div>
+            <div class="row">This is still under construction. Please contact the MIS team for any help.</div>
+        </div>
+    </div>
+
+</body>
+</html>

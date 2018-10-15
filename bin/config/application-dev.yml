@@ -1,0 +1,11 @@
+# These are the deault setting for the development environment
+
+server:
+  port: 10101
+
+spring:
+  pid:
+    file: dev.pid
+
+#beanlogger:
+#  enabled: true

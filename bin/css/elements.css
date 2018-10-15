@@ -1,0 +1,23 @@
+#application-form div.form-group div {
+	padding-bottom: .8em;
+}
+
+#application-form div.form-group div.form-group {
+	padding-bottom: 0;
+	margin-bottom: 0.2em;
+}
+
+.fixed-bottom-left {
+	position: fixed;
+	bottom: 0.5em;
+}
+
+.fixed-bottom-right {
+    position: fixed;
+    right: 2em;
+    bottom: 0.5em;
+}
+
+#toggle-interview-results {
+	float: right;
+}

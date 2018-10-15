@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Form Fragments</title>
+</head>
+<body>
+
+    <div th:fragment="textbox (id, field, text)" class="form-group" th:class="${#fields.hasErrors('__${field}__')}? has-error">
+        <label th:attr="for=${id}" class="col-xs-6 col-sm-4 col-md-4 control-label" th:text="${text + ':'}">Field Text:</label>
+        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+            <input class="form-control" type="text" th:attr="id=${id},placeholder=${text}" th:field="*{__${field}__}"></input> <span th:if="${#fields.hasErrors('__${field}__')}"
+                th:errors="*{__${field}__}" th:class="${#fields.hasErrors('__${field}__')}? text-danger">Field Invalid</span>
+        </div>
+    </div>
+
+    <div th:fragment="datebox (id, field, text)" class="form-group" th:class="${#fields.hasErrors('__${field}__')}? has-error">
+        <label th:attr="for=${id}" class="col-xs-4 col-sm-4 col-md-4 control-label" th:text="${text + ':'}">Field Date:</label>
+        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+            <input class="form-control" type="date" th:attr="id=${id},placeholder=${text}" th:field="*{{__${field}__}}"></input> <span th:if="${#fields.hasErrors('__${field}__')}"
+                th:errors="*{__${field}__}" th:class="${#fields.hasErrors('__${field}__')}? text-danger">Field Invalid</span>
+        </div>
+    </div>
+
+    <div th:fragment="selection (id, field, text, collection)" class="form-group" th:class="${#fields.hasErrors('__${field}__')}? has-error">
+        <label th:attr="for=${id}" class="col-xs-6 col-sm-4 col-md-4 control-label" th:text="${text}">Selection:</label>
+        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+            <select class="form-control" th:field="*{__${field}__}">
+                <option th:value="null" th:text="${'-- Select ' + text + ' --'}">-- Select Option --</option>
+                <option th:each="i : ${__${collection}__}" th:value="${i.id}" th:text="${i}">Option...</option>
+            </select> <span th:if="${#fields.hasErrors('__${field}__')}" th:errors="*{__${field}__}" th:class="${#fields.hasErrors('__${field}__')}? text-danger">Field Invalid</span>
+        </div>
+    </div>
+
+    <div th:fragment="checkbox (id, field, text)" class="form-group" th:class="${#fields.hasErrors('__${field}__')}? has-error">
+        <label th:attr="for=${id}" class="col-xs-8 col-sm-4 col-md-4 control-label" th:text="${text + ':'}">Check Box Label:</label>
+        <div class="col-xs-4 col-sm-8 col-sm-8 col-md-8">
+            <input class="form-control" type="checkbox" th:attr="id=${id}" th:field="*{__${field}__}"></input> <span th:if="${#fields.hasErrors('__${field}__')}"
+                th:errors="*{__${field}__}" th:class="${#fields.hasErrors('__${field}__')}? text-danger">Field Invalid</span>
+        </div>
+    </div>
+
+
+    <div th:fragment="postcodebox (id, field, text)" class="form-group">
+        <label th:attr="for=${id}" class="col-xs-6 col-sm-4 col-md-4 control-label" th:text="${text + ':'}">Field Text:</label>
+        <div class="col-xs-6 col-sm-6 col-sm-6 col-md-6">
+            <input class="form-control" type="text" th:attr="id=${id},placeholder=${text}" th:field="*{{__${field}__}}"></input>
+        </div>
+        <div class="col-xs-6 col-xs-offset-6 col-sm-2 col-sm-2 col-md-2">
+            <button type="button" class="btn btn-default">Lookup</button>
+        </div>
+    </div>
+
+    <div th:fragment="hidden (id, field)">
+        <input type="hidden" th:attr="id=${id},placeholder=${text}" th:field="*{__${field}__}"></input>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>College Fund Payment Dialog Form</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/college-fund-payment.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/datepicker.js}"></script>
+    <script th:replace="fragments/form :: form-javascript"></script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!--  College Fund Payment Dialog Form for editing College Fund Payments  -->
+
+        <div id="college-fund-payment-dialog" title="Create/edit college fund payment" th:fragment="college-fund-payment-dialog">
+            <p class="validateTips"></p>
+
+            <form class="form" id="college-fund-payment-dialog">
+
+                <!--  ncfp = New College fund Payment -->
+                <input type="hidden" id="ncfp-id"></input>
+                <input type="hidden" id="ncfp-student-id"></input>
+
+                <div id="new-college-fund-payment-form" class="row">
+
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-paymentDate">Payment Date</label>
+                        <div  class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="text" name="ncfp-paymentDate" id="ncfp-paymentDate" class="form-control date-picker text ui-widget-content ui-corner-all" required="true"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-amount">Amount</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="text" name="ncfp-amount" id="ncfp-amount" class="form-control text ui-widget-content ui-corner-all"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-chequeDate">Cheque Date</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="text" name="ncfp-chequeDate" id="ncfp-chequeDate" class="form-control date-picker text ui-widget-content ui-corner-all" required="true"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-payee">Payee</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="text" name="ncfp-payee" id="ncfp-payee" class="form-control text ui-widget-content ui-corner-all"></input>
+                        </div>
+                    </div>
+
+                    <div id="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-giftAid">Gift Aid</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="checkbox" id="ncfp-giftAid" class="form-control text ui-widget-content ui-corner-all"></input>
+                        </div>
+                    </div>
+
+                    <div id="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="ncfp-cash">Cash</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="checkbox" id="ncfp-cash" class="form-control text ui-widget-content ui-corner-all"></input>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

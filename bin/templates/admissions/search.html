@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form - Search</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+<script type="text/javascript" src="/webjars/angularjs/1.4.2/angular.min.js"></script>
+<script type="text/javascript" src="/js/search.js"></script>
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+</style>
+</head>
+
+<body ng-app="ApplicationSearch">
+	<div layout:fragment="content">
+		<div>
+			<span th:text="${message}"></span>
+		</div>
+        
+		<div ng-controller="ApplicationSearchController as app">
+			<div>
+				<legend>Applicant Search</legend>
+				<form class="search-form form-inline">
+					<label for="search">Name:</label> <input id="search" name="search" class="form-control input-sm" ng-model="app.searchTerm"> </input>
+					<button type="submit" class="btn btn-sm btn-primary" ng-click="app.search()">Search</button>
+				</form>
+			</div>
+			<div class="message">{{ app.message }}</div>
+         
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<th>Ref</th>
+					<th>Person</th>
+                    <th>School</th>
+					<th>Status</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="a in applicationList | orderBy : 'personName' " class="ng-cloak">
+						<td><a href="/application/edit/{{a.studentId}}">{{ a.referenceNo }}</a></td>
+						<td>{{ a.personName }}</td>
+                        <td>{{ a.schoolName }}</td>
+						<td>{{ a.status }}</td>
+					</tr>
+                    <tr ng-show="noResults">
+                        <td colspan="4">No Results</td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+    
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Address Dialog Form</title>
+</head>
+<body>
+<!--  Address List Dialog Form for editing contacts  -->
+<div id="address-list-dialog" title="Address List" th:fragment="address-list-dialog">
+    <p class="validateTips"></p>
+
+    <form class="form">
+        <fieldset>
+        <!--  pl = Postcode Lookup -->
+        
+        
+            <div class="form-group">
+                <label class="col-md-12 control-label" for="pl-address-list">Address:</label>
+                <div class="col-md-12">
+                    <select class="form-control" name="address-list" id="pl-address-list" size="20">
+                    </select>
+                </div>
+            </div>
+       
+            
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

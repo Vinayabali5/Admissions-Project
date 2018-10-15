@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form - School List</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+
+<!-- #TODO switch out for webjar version if exists -->
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+
+<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+<script type="text/javascript" src="/js/components/entities/school/school.service.js"></script>
+<script type="text/javascript" src="/js/components/entities/schoolType/schoolType.service.js"></script>
+<script type="text/javascript" src="/js/components/entities/schoolPriority/schoolPriority.service.js"></script>
+
+<script type="text/javascript" src="/js/modules/entities/school/schoolEditorDialog.controller.js"></script>
+<script type="text/javascript" src="/js/modules/entities/school/schoolEditor.controller.js"></script>
+
+<!-- <script type="text/javascript" src="/js/school-editor.js"></script> -->
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+</style>
+</head>
+
+<body ng-app="SchoolEditor">
+    <div layout:fragment="content">
+        <div>
+            <span th:text="${message}">{{msg}}</span>
+        </div>
+
+<!-- 
+        <div ng-controller="SchoolGridController">
+            <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>
+            <span ng-bind="currentFocused"></span> <br /> <br />
+            <div ui-grid="gridOptions" ui-grid-edit="" ui-grid-cellnav="" ui-grid-pagination="" class="grid"></div>
+            <p>Current page: {{ gridApi.pagination.getPage() }} of {{ gridApi.pagination.getTotalPages() }}</p>
+            <button type="button" class="btn btn-success" ng-click="gridApi.pagination.previousPage()">previous page</button>
+            <button type="button" class="btn btn-success" ng-click="gridApi.pagination.nextPage()">next page</button>
+        </div>
+-->
+        
+        <div ng-controller="SchoolListController">
+            <h1>School List</h1>
+            <table id="schoolTable" class="table">
+                <thead class="table-header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Priority</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="school in schoolList | orderBy:name" class="ng-cloak">
+                        <td>{{ school.name }}</td>
+                        <td>{{ school.type.description }}</td>
+                        <td>{{ school.priority.code }}</td>
+                        <td>{{ school.line1 }} {{ school.line2 }} {{ school.line3 }} {{ school.postcode }}</td> 
+                        <td><button class="btn btn-default" ng-click="editSchool($index, school.id)">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+            <uib-pagination total-items="paginationInfo.totalItems" ng-change="pageChanged()" ng-model="paginationInfo.pageNumber" class="pagination-sm"></uib-pagination>
+            </div>
+            <div>
+            <button class="btn btn-default" ng-click="addSchool()">Add School</button>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

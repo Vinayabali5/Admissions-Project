@@ -1,0 +1,29 @@
+postcode:
+  lookup: 
+    key: EF56-MD58-YB95-MM43
+    username: COULS11111
+
+spring:
+   datasource:
+     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver     
+     url: jdbc:sqlserver://cid-sql\DEVELOPMENT;databaseName=CID
+ 
+     username: Development
+     password: password4Development
+     initialize: false
+     tomcat:
+       initialSize: 10
+       maxActive: 100
+       maxIdle: 5
+       minIdle: 5
+       test-on-borrow: true
+       validation-query: SELECT 1
+   jpa:
+     database-platform: org.hibernate.dialect.SQLServer2008Dialect
+     show_sql: true
+     hibernate:
+       ddl-auto: validate
+       naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+   data:
+     jpa:
+       repositories.enabled: true

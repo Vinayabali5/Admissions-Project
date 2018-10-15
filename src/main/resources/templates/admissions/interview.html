@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+</head>
+<body ng-app="InterviewApp" layout:fragment="content">
+<div class="container-fluid" ng-controller="InterviewCtrl as app">    
+
+    <div class="row">
+        <h3>Interview Search</h3>
+        <form class="search-form form-inline">
+            <div class="form-group">
+	            <label for="search">Name:</label>
+	            <input id="search" name="search" class="form-control input-sm" ng-model="app.searchTerm"> </input>
+	            <button type="submit" class="btn btn-sm btn-primary" ng-click="app.search()">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <button id="toggle-interview-results" class="btn btn-sm btn-primary" type="button">Show/Hide Results</button>
+        <h4>Search Results </h4>
+        <div id="interview-results" class="collapsable">
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <th>Ref</th>
+                    <th>Person</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="a in applicationList">
+                        <td><a href="#" ng-click="app.loadInterviewData(a.studentId)">{{ a.referenceNo }}</a></td>
+                        <td>{{ a.personName }}</td>
+                        <td>{{ a.status }}</td>
+                    </tr>
+                    <tr ng-show="noResults">
+                        <td colspan="3">No Results</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div id="interview-details-section" class="row collapsable">
+        <h3>Interview Details</h3>
+        <div class="form-group col-md-12 col-sm-12">
+            <form>
+                <div class="row">
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <input type="hidden" id="student-id"></input>
+	                    <label for="studentRef">Reference No:</label>
+	                    <input type="text" id="studentRef" class="form-control input-sm" ng-model="interview.studentRef" readonly="true"> </input>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label for="firstName">First Name:</label>
+	                    <input type="text" id="firstName" class="form-control input-sm" ng-model="interview.firstName" readonly="true"> </input>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label for="surname">Surname:</label>
+	                    <input type="text" id="surname" class="form-control input-sm" ng-model="interview.surname" readonly="true"> </input>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label for="middleNames">Middle Names:</label>
+	                    <input type="text" id="middleNames" class="form-control input-sm" ng-model="interview.middleNames" readonly="true"> </input>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label for="dob">Date of Birth:</label>
+	                    <input type="text" id="dob" class="form-control input-sm" ng-model="interview.dob" readonly="true" th:disabled="disabled"></input>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label for="school">School:</label>
+	                    <input id="school" class="form-control input-sm" ng-model="interview.school.name" readonly="true"> </input>
+	                </div>
+                </div>
+                <div class="row">
+                    <legend>Interview Details</legend>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label>Student Type:</label>
+	                    <student-type-selection id="studentType" class="form-control input-sm" ng-model-var="interview.studentTypeId"></student-type-selection>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label>Offer Type:</label>
+	                    <offer-type-selection id="offerType" class="form-control input-sm" ng-model-var="interview.offerTypeId"></offer-type-selection>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label>Interviewer:</label>
+	                    <interviewer-selection id="interviewer" class="form-control input-sm" ng-model-var="interview.interviewerId"> </interviewer-selection>
+	                </div>
+	                <div class="form-group col-md-3 col-sm-6">
+	                    <label>Interview Date:</label>
+	                    <input type="text" placeholder="DD/MM/YYYY" id="interviewDate" class="form-control input-sm" ng-model="interview.interviewDate"></input>
+	                </div>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <legend>Course Requests</legend>
+                    <div>
+                        <div class="form-group form-inline">
+                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="interview-request">New Request: </label>
+                            <input type="text" class="form-control input-sm" id="new-interview-request" placeholder="New Request"></input>
+                            <button id="add-interview-request" type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                        <table class="table table-hower table-condensed" id="request-interview-table">
+                            <thead>
+                                <th>Request Code</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </thead>
+                            <tbody>
+                                <!-- Course Request Appear Here -->
+                            </tbody>
+                        </table>
+                        <button id="reload-interview-request-table" class="btn bth-default hidden">Reload</button>
+                    </div>
+                </div>
+                <div class="row fixed-bottom-right">
+                    <button id="saveInterview" class="btn btn-primary">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/webjars/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="/js/interview.js"></script>
+    <script type="text/javascript" src="/js/directives/offertypeselection.js"></script>
+    <script type="text/javascript" src="/js/directives/schoolselection.js"></script>
+    <script type="text/javascript" src="/js/directives/studenttypeselection.js"></script>
+    <script type="text/javascript" src="/js/directives/interviewerselection.js"></script>
+    <script type="text/javascript" src="/js/controllers/application-controllers.js"></script>
+    <script type="text/javascript" src="/js/datepicker.js"></script>
+    <script th:replace="fragments/form :: form-javascript"></script>
+
+</div>
+</body>
+
+</html>

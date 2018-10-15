@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Contact Dialog Form</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/postcode-lookup.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/contact-dialog.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/validation.js}"></script>
+<script th:replace="fragments/form :: form-javascript"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!--  Contact Dialog Form for editing contacts  -->
+		
+		
+		<div id="contact-dialog-form" title="Create/edit contact" th:fragment="contact-dialog-form">
+			<p class="validateTips"></p>
+
+			<div>
+				<span th:text="${message}"></span>
+			</div>
+
+			<form class="form" id="contact-dialog-form">
+				<!-- nc = New Contact -->
+				<input type="hidden" id="nc-id"></input> <input type="hidden" id="nc-person-id"></input> <input type="hidden" id="nc-title-id"></input>
+                
+                <div id="new-contact-form" class="row">
+
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-type">Relation:</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<select class="form-control" name="nc-type" id="nc-type">
+								<option value="null">-- Select Contact Type --</option>
+								<option th:each="i : ${contactTypeList}" th:value="${i.id}" th:text="${i}">Option...</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-title">Title:</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<select class="form-control" name="nc-title" id="nc-title">
+								<option value="null">-- Select Title --</option>
+								<option th:each="i : ${titleList}" th:value="${i.id}" th:text="${i}">Option...</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-first-name">First Name</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="text" name="nc-first-name" minlength="2" id="nc-first-name" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-surname">Surname</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="text" name="nc-surname" minlength="2" id="nc-surname" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-home">Home</label>
+                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                            <input type="text" name="nc-home" id="nc-home" class="form-control text ui-widget-content ui-corner-all"></input>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-mobile">Mobile</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="text" name="nc-mobile" id="nc-mobile" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-work">Work</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="text" name="nc-work" id="nc-work" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-email">Email</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="text" name="nc-email" id="nc-email" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+	
+	
+	
+					<div id="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-contactable">Contactable</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="checkbox" id="nc-contactable" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+					<div id="form-group">
+						<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-preferred">Preferred</label>
+						<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+							<input type="checkbox" id="nc-preferred" class="form-control text ui-widget-content ui-corner-all"></input>
+						</div>
+					</div>
+				</div>
+	
+
+				<div id="contact-address-dialog-form" class="row postcode-lookup-address">
+				
+						<legend>Address Details</legend>
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-line1">Address Line1</label>
+							<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+								<input type="text" name="line1" id="nc-line1" class="form-control" placeholder="Address Line1" readonly="false"></input>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-line2">Address Line2</label>
+							<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+								<input type="text" name="line2" id="nc-line2" class="form-control" placeholder="Address Line2" readonly="false"></input>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-line3">Address Line3</label>
+							<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+								<input type="text" name="line3" id="nc-line3" class="form-control" placeholder="Address Line3" readonly="false"></input>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="hidden" for="nc-line4">Address Line4</label>
+							<div class="hidden">
+								<input type="hidden" name="line4" id="nc-line4" class="form-control" placeholder="Address Line4" readonly="false"></input>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="hidden" for="nc-line5">Address Line5</label>
+							<div class="hidden">
+								<input type="hidden" name="line5" id="nc-line5" class="form-control" placeholder="Address Line5" readonly="false"></input>
+							</div>
+						</div>
+
+					<div class="form-group">
+						<label class="hidden" for="nc-buildingName">Building Name</label>
+						<div class="hidden">
+							<input type="hidden" name="buildingName" id="nc-buildingName" class="form-control" placeholder="Building Name" readonly="false"></input>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="hidden" for="nc-subBuilding">SubBuilding</label>
+						<div class="hidden">
+							<input type="hidden" name="subBuilding" id="nc-subBuilding" class="form-control" placeholder="SubBuilding" readonly="false"></input>
+						</div>
+					</div>
+					
+					<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-town">Post Town</label>
+							<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+								<input type="text" name="town" id="nc-town" class="form-control" placeholder="Post Town" readonly="false"></input>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-county">County</label>
+							<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+								<input type="text" name="county" id="nc-county" class="form-control" placeholder="County" readonly="false"></input>
+							</div>
+						</div>
+
+						<div class="form-group col-sx-12 col-sm-12 col-md-12 ">
+						    <div class="row">
+								<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="nc-postcode">Postcode</label>
+								<div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+									<input type="text" name="postcode" id="nc-postcode" class="form-control postcode" placeholder="Postcode"></input>
+								</div>
+							</div>
+							<div class="row">
+	                            <div class="col-xs-3 col-sm-3 col-sm-3 col-md-3 col-md-offset-4">
+									<button id="nc-postcode-lookup" type="button" class="btn btn-primary postcode-lookup">Lookup</button>
+								</div>
+								<div class="col-xs-3 col-sm-3 col-sm-3 col-md-3">
+									<button id="nc-manual-lookup" type="button" value="Button" class="btn btn-primary">Manual Entry</button>
+								</div>
+							</div>
+						</div>
+
+					
+				</div>
+			</form>
+			 <script>   
+         $("#contact-dialog-form").validate(); 
+         
+         </script> 
+		</div>
+
+	</div>
+
+</body>
+</html>

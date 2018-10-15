@@ -1,0 +1,16 @@
+# This is the setting for this machine dev profile. 
+# This file should not be checked into source control.
+
+spring: 
+  profiles: 
+    active: {{ PROFILE NAME }}
+    include: db-defaults
+  datasource:
+    url: jdbc:sqlserver://{{ DATABASE SERVER AND INSTANCE }};databaseName={{ DATABASE NAME }}
+    username: {{ DATABASE USERNAME }}
+    password: {{ DATABASE PASSWORD }}
+
+postcode: 
+  lookup:
+      key: {{ POSTCODE ANYWHERE KEY }}
+      username: {{ POSTCODE ANYWHERE USERNAME }}

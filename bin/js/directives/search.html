@@ -1,0 +1,25 @@
+<div>
+	<div>
+		<legend>Applicant Search</legend>
+		<form class="search-form">
+			<label for="search">Name:</label> <input id="search" name="search" class="form-control input-sm" ng-model="searchTerm" ng-keyup="search()"> </input>
+		</form>
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<th>Ref</th>
+			<th>Person</th>
+			<th>Status</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="a in applicationList">
+				<td><a href="#" ng-click="loadForm()">{{ a.referenceNo }}</a></td>
+				<td>{{ a.firstName + ", " + a.surname }}</td>
+				<td>{{ a.status }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+

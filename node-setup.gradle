@@ -1,0 +1,61 @@
+/***
+ * This script is used to add the node tasks to gradle for resolving the node_module and bower_components for the project.
+ *
+ * Requires the following in the buildScript dependencies
+ *      classpath "com.moowork.gradle:gradle-node-plugin:0.11"
+ *
+ * @author Michael Horgan
+ *
+ */
+
+apply plugin: 'com.moowork.node'
+
+def bowerDir = 'bower_components'
+def webAppDir = 'src/main/webapp'
+
+node {
+    version = '0.12.7'
+    npmVersion = '3.3.8'
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+task npmCacheConfig(type: NpmTask) {
+    description = "Configure the NPM cache"
+    def npmCacheDir = "${gradle.getGradleUserHomeDir()}/caches/npm"
+    outputs.files file(npmCacheDir)
+    args = [
+        'config',
+        'set',
+        'cache',
+        npmCacheDir
+    ]
+}
+
+task npmPackages(type: NpmTask, dependsOn: npmCacheConfig) {
+    description = "Install Node.js packages"
+    args = ['install']
+    inputs.files file('package.json')
+    outputs.files file('node_modules')
+}
+
+task bowerInstall(type: NodeTask) {
+    script = file('node_modules/bower/bin/bower')
+    args = [
+        "--config.cwd=${webAppDir}",
+        "--config.directory=${bowerDir}",
+        "--allow-root",
+        'install'
+    ]
+    inputs.files file(webAppDir + '/bower.json')
+    outputs.files file(webAppDir + '/bower_components')
+    dependsOn npmPackages
+}
+
+task bowerPackages() { dependsOn bowerInstall }
+
+processResources.dependsOn bowerPackages
+
+clean.delete << file(webAppDir + '/bower_components')
+clean.delete << file('node_modules')

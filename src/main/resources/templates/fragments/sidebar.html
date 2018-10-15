@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Default Sidebar</title>
+</head>
+<body>
+	<div class="col-sm-3 col-md-2 sidebar" th:fragment="sidebar-left">
+		<ul th:replace="fragments/sidebar :: sidebar" />
+	</div>
+	<div class="col-sm-3 col-sm-offset-9 col-md-2 col-md-offset-10 sidebar" th:fragment="sidebar-right">
+		<ul th:replace="fragments/sidebar :: sidebar" />
+	</div>
+	<ul class="nav nav-sidebar" th:fragment="sidebar">
+		<li><a href="#" th:href="@{/application/new}">New Application</a></li>
+		<li><a href="#" th:href="@{/application/list}">Application List</a></li>
+		<li><a href="#" th:href="@{/application/search}">Search</a></li>
+		<li><a href="#" th:href="@{/interview/}">Interview</a></li>
+		<li><a href="#" th:href="@{/reports}">Reports</a></li>
+	</ul>
+
+</body>
+</html>

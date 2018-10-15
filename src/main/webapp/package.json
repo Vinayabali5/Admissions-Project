@@ -1,0 +1,17 @@
+{
+  "name": "cis-admission-webapp",
+  "description": "College Information System - Admissions Application",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.6.1"
+  },
+  "bugs": {
+    "url": "http://bugs.reigate.ac.uk/projects/cis-admission"
+  },
+  "private": "true"
+}

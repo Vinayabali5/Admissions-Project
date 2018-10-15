@@ -1,0 +1,5 @@
+ <select class="form-control input-sm" ng-model="ngModel">
+	<option>- Select Option -</option>
+	<option ng-repeat="i in staffList" value="{{ i.id }}">{{ i.person.surname + "," + i.person.firstName  }}</option>
+
+</select> 

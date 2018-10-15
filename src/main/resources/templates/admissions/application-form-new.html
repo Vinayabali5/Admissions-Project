@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+<head>
+<title>Application Form</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+<link type="text/css" rel="stylesheet" href="/css/dob.css"/>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/postcode-lookup.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/duplicate-detection.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/contact-address-dialog1.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/datepicker.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/date-of-birth.js}"></script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div>
+            <span th:text="${message}"></span>
+        </div>
+        <form action="#" name="application-form" id="application-form" class="form" method="post" th:action="@{/application/save-new}" th:object="${app}">
+            <div class="row">
+                <fieldset>
+                    <legend>Application Details</legend>
+                    <div class="col-md-6">
+	                    <div class="form-group" th:class="${#fields.hasErrors('received')}? has-error">
+	                        <label for="received" class="col-xs-6 col-sm-4 col-md-4 control-label">Date Received:</label>
+	                        <div class="form-group col-md-6 col-sm-12">
+	                            <input class="form-control date-picker" type="text" name="received" id="received" placeholder="DD/MM/YYYY" th:field="*{received}" required="true"></input> 
+	                            <span th:if="${#fields.hasErrors('received')}" th:errors="*{received}" th:class="${#fields.hasErrors('received')}? text-danger">Field Invalid</span>
+	                        </div>
+	                    </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+						<div class="form-group" th:class="${#fields.hasErrors('academicYear.id')}? has-error">
+							<label for="academicYear" class="col-xs-6 col-sm-4 col-md-4 control-label">Year Applied:</label>
+							<div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+								<select class="form-control" th:field="*{academicYear.id}">
+									<option value="">-- Select Year --</option>
+									<option th:each="i : ${academicYearList}" th:value="${i.id}" th:text="${i.description}">Option...</option>
+								</select> 
+								<span th:if="${#fields.hasErrors('academicYear.id')}" th:errors="*{academicYear.id}" th:class="${#fields.hasErrors('academicYear.id')}? text-danger">Field Invalid</span>
+							</div>
+		     	        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 col-sm-12">
+                    <fieldsset> <legend> Personal Details</legend>
+                    <div class="form-group" th:class="${#fields.hasErrors('firstName')}? has-error">
+                        <label for="firstName" class="col-xs-6 col-sm-4 col-md-4 control-label">First Name:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" placeholder="First Name" th:field="*{firstName}" id="first-name" name="firstName" minlength="2" type="text"></input>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" th:class="${#fields.hasErrors('middleNames')}? has-error">
+                        <label for="middleNames" class="col-xs-6 col-sm-4 col-md-4 control-label">Middle Name(s):</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" placeholder="Middle Name(s)" th:field="*{middleNames}" id="middle-names" name="middleNames" minlength="2" type="text"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('surname')}? has-error">
+                        <label for="surname" class="col-xs-6 col-sm-4 col-md-4 control-label">Surname:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="text" name="surname" minlength="2" id="surname" placeholder="Surname" th:field="*{surname}"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('preferredName')}? has-error">
+                        <label for="preferredName" class="col-xs-6 col-sm-4 col-md-4 control-label">Preferred Name:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="text" name="preferredName" id="preferred-name" minlength="2" placeholder="Preferred Name" th:field="*{preferredName}"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('previousSurname')}? has-error">
+                        <label for="previousSurname" class="col-xs-6 col-sm-4 col-md-4 control-label">Previous Surname:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="text" name="previousSurname" id="PreviousSurname" minlength="2" placeholder="Previous Surname"
+                                th:field="*{previousSurname}"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('dob')}? has-error">
+                        <label for="dob" class="col-xs-6 col-sm-4 col-md-4 control-label">Date of Birth:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="text" name="dob" id="dob" placeholder="DD/MM/YYYY" th:field="*{dob}"></input>
+                            <span class="error"> Invalid Date. Please Enter the valid date format(dd/mm/yyyy)</span>
+                        </div>
+                    </div>
+
+
+						<div class="form-group" th:class="${#fields.hasErrors('gender.id')}? has-error">
+                            <label for="gender" class="col-xs-6 col-sm-4 col-md-4 control-label">Gender:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" th:field="*{gender.id}">
+                                    <option value="">-- Select Gender --</option>
+                                    <option th:each="i : ${genderList}" th:value="${i.id}" th:text="${i.description}">Option...</option>
+                                </select> <span th:if="${#fields.hasErrors('gender.id')}" th:errors="*{gender.id}" th:class="${#fields.hasErrors('gender.id')}? text-danger">Field
+                                    Invalid</span>
+                            </div>
+                        </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('home')}? has-error">
+                        <label for="home" class="col-xs-6 col-sm-4 col-md-4 control-label">Home Telephone:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control left phone-group" type="tel" name="home" id="home" placeholder="Home Telephone" th:field="*{home}"></input>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" th:class="${#fields.hasErrors('mobile')}? has-error">
+                        <label for="mobile" class="col-xs-6 col-sm-4 col-md-4 control-label">Mobile Telephone:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control left phone-group" type="tel" name="mobile" id="mobile" placeholder="Mobile Telephone" th:field="*{mobile}"></input>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" th:class="${#fields.hasErrors('email')}? has-error">
+                        <label for="email" class="col-xs-6 col-sm-4 col-md-4 control-label">Student Email:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="email" name="email" id="email" placeholder="Student Email" th:field="*{email}"></input>
+                        </div>
+                    </div>
+                    
+                   <div class="form-group" th:class="${#fields.hasErrors('nationality')}? has-error">
+                            <label for="nationality" class="col-xs-6 col-sm-4 col-md-4 control-label">Nationality:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" th:field="*{nationality.id}">
+                                    <option th:each="i : ${nationalityList}" th:value="${i.id}" th:text="${i.description}">Option...</option>
+                                </select> <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}" th:class="${#fields.hasErrors('nationality')}? text-danger">Field
+                                    Invalid</span>
+                            </div>
+                        </div>
+
+                   <div class="form-group" th:class="${#fields.hasErrors('resident')}? has-error">
+                            <label for="resident" class="col-xs-6 col-sm-4 col-md-4 control-label">Resident:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="resident" id="resident" th:field="*{resident}"></input>
+                            </div>
+                        </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('countryOfResidence')}? has-error">
+                        <label for="countryOfResidence" class="col-xs-6 col-sm-4 col-md-4 control-label">Country Of Residence:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" type="text" name="countryOfResidence" id="country-of-residence" placeholder="Country Of Residence"
+                                th:field="*{countryOfResidence}"></input>
+                        </div>
+                    </div>
+                    </fieldsset>
+                </div>
+
+                <div id="main-address-form" class="form-group col-md-6 col-sm-12 postcode-lookup-address">
+                    <fieldset>
+                        <legend>Address Details</legend>
+                        <input type="hidden" id="addressId" th:field="*{addressId}" readonly="false" tabindex="-1"></input>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('line1')}? has-error">
+                            <label for="line1" class="col-xs-6 col-sm-4 col-md-4 control-label">Address Line 1:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="text" id="line1" placeholder="Address Line 1" th:field="*{line1}" readonly="false" tabindex="-1" required="true"></input>
+                                <span th:if="${#fields.hasErrors('line1')}" th:errors="*{line1}" th:class="${#fields.hasErrors('line1')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('line2')}? has-error">
+                            <label for="line2" class="col-xs-6 col-sm-4 col-md-4 control-label">Address Line 2:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="text" id="line2" placeholder="Address Line 2" th:field="*{line2}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('line2')}" th:errors="*{line2}" th:class="${#fields.hasErrors('line2')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('line3')}? has-error">
+                            <label for="line3" class="col-xs-6 col-sm-4 col-md-4 control-label">Address Line 3:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="text" id="line3" placeholder="Address Line 3" th:field="*{line3}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('line3')}" th:errors="*{line3}" th:class="${#fields.hasErrors('line3')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="hidden">
+                            <label for="line4" class="hidden">Address Line 4:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="hidden" id="line4" placeholder="Address Line 4" th:field="*{line4}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('line4')}" th:errors="*{line4}" th:class="${#fields.hasErrors('line4')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="hidden">
+                            <label for="line5" class="hidden">Address Line 5:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="hidden" id="line5" placeholder="Address Line 5" th:field="*{line5}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('line5')}" th:errors="*{line5}" th:class="${#fields.hasErrors('line5')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="hidden">
+                            <label for="line5" class="hidden">Building Name:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="hidden" id="buildingName" placeholder="Building Name" th:field="*{buildingName}" readonly="false" tabindex="-1"></input>
+                                <span th:if="${#fields.hasErrors('buildingName')}" th:errors="*{buildingName}" th:class="${#fields.hasErrors('buildingName')}? text-danger">Field
+                                    Invalid</span>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="hidden">
+                            <label for="line5" class="hidden">SubBuilding:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="hidden" id="subBuilding" placeholder="SubBuilding" th:field="*{subBuilding}" readonly="false" tabindex="-1"></input>
+                                <span th:if="${#fields.hasErrors('subBuilding')}" th:errors="*{subBuilding}" th:class="${#fields.hasErrors('subBuilding')}? text-danger">Field
+                                    Invalid</span>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('town')}? has-error">
+                            <label for="town" class="col-xs-6 col-sm-4 col-md-4 control-label">Town:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="text" id="town" placeholder="Town" th:field="*{town}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('town')}" th:errors="*{town}" th:class="${#fields.hasErrors('town')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('county')}? has-error">
+                            <label for="county" class="col-xs-6 col-sm-4 col-md-4 control-label">County:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="text" id="county" placeholder="County" th:field="*{county}" readonly="false" tabindex="-1"></input> <span
+                                    th:if="${#fields.hasErrors('county')}" th:errors="*{county}" th:class="${#fields.hasErrors('county')}? text-danger">Field Invalid</span>
+                            </div>
+                        </div>
+
+                        <div class="container  col-sx-12 col-sm-12 col-md-12 ${#fields.hasErrors('postcode')}? has-error">
+                            <div class="row">
+                                <label for="postcode" class="col-xs-6 col-sm-4 col-md-4 control-label">Postcode</label>
+                                <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                    <input class="form-control postcode" type="text" id="postcode" placeholder="Postcode" th:field="*{postcode}" required="true"></input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-md-offset-4">
+                                    <button id="postcode-lookup" type="button" value="Button" class="btn btn-primary postcode-lookup">Lookup</button>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    <button id="manual-lookup" type="button" value="Button" class="btn btn-primary">Manual Entry</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                </div>
+
+                <div class="form-group col-md-6 col-sm-12">
+                    <fieldsset> <legend>Sibling Details</legend>
+                   <div class="form-group" th:class="${#fields.hasErrors('sibling')}? has-error">
+                            <label for="sibling" class="col-xs-6 col-sm-4 col-md-4 control-label">Sibling at College:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="sibling" id="sibling" th:field="*{sibling}"></input>
+                            </div>
+                        </div>
+
+
+                    <div class="form-group" th:class="${#fields.hasErrors('siblingName')}? has-error">
+                        <label for="siblingName" class="col-xs-6 col-sm-4 col-md-4 control-label">Sibling Name:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" placeholder="Sibling Name" th:field="*{siblingName}" id="sibling-name" name="siblingName" minlength="2" type="text"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('siblingYear')}? has-error">
+                        <label for="siblingYear" class="col-xs-6 col-sm-4 col-md-4 control-label">Sibling Year:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" placeholder="Sibling Year" th:field="*{siblingYear}" id="sibling-year" name="siblingYear" minlength="4" type="text"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('siblingAdmNo')}? has-error">
+                        <label for="siblingAdmNo" class="col-xs-6 col-sm-4 col-md-4 control-label">Sibling AdmNo:</label>
+                        <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                            <input class="form-control" placeholder="Sibling AdmNo" th:field="*{siblingYear}" id="sibling-admNo" name="siblingAdmNo" minlength="4" type="text"></input>
+                        </div>
+                    </div>
+                    </fieldsset>
+                </div>
+
+
+                <div class="row" id="twin-match">
+                    <div class="form-group col-md-12 col-sm-12">
+                        <fieldset>
+                            <legend>Duplicate Matches Found</legend>
+                            <table id="twin-table" class="table">
+                                <thead>
+                                    <th>Surname</th>
+                                    <th>First Name</th>
+                                    <th>Middle Name(s)</th>
+                                    <th>Date of Birth</th>
+                                    <th>Home Telephone</th>
+                                    <th>Mobile Telephone</th>
+                                    <th>Address</th>
+                                    <th>Actions</th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-12 col-sm-12">
+                    <fieldsset> <legend>Correspondence Details</legend>
+                    <div class="contact col-xs-12 col-sm-12 col-md-6 control-label">
+                        <h4>Contact 1</h4>
+                        <input type="hidden" id="contact-0-id" class="form-group col-md-12 col-sm-12" th:field="*{contacts[0].id}"></input>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contact-0-contactType">Contact Type:</label>
+                            <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" name="contact-0-contactType" id="contact-0-contactType" th:field="*{contacts[0].contactType.id}">
+                                    <option value="">-- Select Contact Type --</option>
+                                    <option th:each="i : ${contactTypeList}" th:value="${i.id}" th:text="${i}">Option...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contact-0-title">Title:</label>
+                            <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" name="contact-0-title" id="contact-0-title" th:field="*{contacts[0].contact.title.id}">
+                                    <option value="">-- Select Title --</option>
+                                    <option th:each="i : ${titleList}" th:value="${i.id}" th:text="${i}">Option...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.firstName')}? has-error">
+                            <label for="contacts[0].contact.firstName" class="col-xs-6 col-sm-4 col-md-4 control-label">First Name:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="First Name" th:field="*{contacts[0].contact.firstName}" id="contact-0-first-name"
+                                    name="contacts[0].contact.firstName" minlength="2" type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.surname')}? has-error">
+                            <label for="contacts[0].contact.surname" class="col-xs-6 col-sm-4 col-md-4 control-label">Surname:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Surname" th:field="*{contacts[0].contact.surname}" id="contact-0-surname"
+                                    name="contacts[0].contact.surname" minlength="2" type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.home')}? has-error">
+                            <label for="contacts[0].contact.home" class="col-xs-6 col-sm-4 col-md-4 control-label">Home:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Home" th:field="*{contacts[0].contact.home}" id="contact-0-home" name="contacts[0].contact.home"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.mobile')}? has-error">
+                            <label for="contacts[0].contact.mobile" class="col-xs-6 col-sm-4 col-md-4 control-label">Mobile:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Mobile" th:field="*{contacts[0].contact.mobile}" id="contact-0-mobile" name="contacts[0].contact.mobile"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.work')}? has-error">
+                            <label for="contacts[0].contact.work" class="col-xs-6 col-sm-4 col-md-4 control-label">Work:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Work" th:field="*{contacts[0].contact.work}" id="contact-0-work" name="contacts[0].contact.work"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.email')}? has-error">
+                            <label for="contacts[0].contact.email" class="col-xs-6 col-sm-4 col-md-4 control-label">Email:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Email" th:field="*{contacts[0].contact.email}" id="contact-0-email" name="contacts[0].contact.email"
+                                    type="email"></input>
+                            </div>
+                        </div>
+
+						<div class="form-group" th:class="${#fields.hasErrors('contacts[0].contactable')}? has-error">
+                            <label for="contact-0-contactable" class="col-xs-6 col-sm-4 col-md-4 control-label">Contactable:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="contact-0-contactable" id="contact-0-contactable" th:field="*{contacts[0].contactable}"></input>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[0].preferred')}? has-error">
+                            <label for="contact-0-preferred" class="col-xs-6 col-sm-4 col-md-4 control-label">Preferred:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="contact-0-preferred" id="contact-0-preferred" th:field="*{contacts[0].preferred}"></input>
+                            </div>
+                        </div>
+                        
+                         <div class="contact-dialog-container">
+                            <div id="contact0-address-form" class="form-group col-md-12 col-sm-12 contact-address-dialog postcode-lookup-address">
+                                <fieldset>
+                                    <legend>Contact 1 Address</legend>
+                                    <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.address.line1')}? has-error">
+                                        <label for="contacts[0].contact.address.line1" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line1</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control" type="text" name="line1" id="contact0-line1" placeholder="Address Line1" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.line1}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line1')}"
+                                                th:errors="*{contacts[0].contact.address.line1}" th:class="${#fields.hasErrors('contacts[0].contact.address.line1')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.address.line2')}? has-error">
+                                        <label for="contacts[0].contact.address.line2" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line2</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control" type="text" name="line2" id="contact0-line2" placeholder="Address Line2" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.line2}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line2')}"
+                                                th:errors="*{contacts[0].contact.address.line2}" th:class="${#fields.hasErrors('contacts[0].contact.address.line2')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.address.line3')}? has-error">
+                                        <label for="contacts[0].contact.address.line3" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line3</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control" type="text" name="line3" id="contact0-line3" placeholder="Address Line3" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.line3}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line3')}"
+                                                th:errors="*{contacts[0].contact.address.line3}" th:class="${#fields.hasErrors('contacts[0].contact.address.line3')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="hidden">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.line4">Address Line4</label>
+                                        <div class="hidden">
+                                            <input class="hidden" type="text" name="line4" id="contact0-line4" placeholder="Address Line4" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.line4}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line4')}"
+                                                th:errors="*{contacts[0].contact.address.line4}" th:class="${#fields.hasErrors('contacts[0].contact.address.line4')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="hidden">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.line5">Address Line5</label>
+                                        <div class="hidden">
+                                            <input class="hidden" type="text" name="line5" id="contact0-line5" placeholder="Address Line5" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.line5}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line5')}"
+                                                th:errors="*{contacts[0].contact.address.line5}" th:class="${#fields.hasErrors('contacts[0].contact.address.line5')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="hidden">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.buildingName">Building Name</label>
+                                        <div class="hidden">
+                                            <input class="hidden" type="text" name="buildingName" id="contact0-buildingName" placeholder="Building Name" readonly="false"
+                                                tabindex="-1" th:field="*{contacts[0].contact.address.buildingName}"></input> <span
+                                                th:if="${#fields.hasErrors('contacts[0].contact.address.buildingName')}" th:errors="*{contacts[0].contact.address.buildingName}"
+                                                th:class="${#fields.hasErrors('contacts[0].contact.address.buildingName')}? text-danger">Field Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="hidden">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.subBuilding">SubBuilding</label>
+                                        <div class="hidden">
+                                            <input class="hidden" type="text" name="subBuilding" id="contact0-subBuilding" placeholder="SubBuilding" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.subBuilding}"></input> <span
+                                                th:if="${#fields.hasErrors('contacts[0].contact.address.subBuilding')}" th:errors="*{contacts[0].contact.address.subBuilding}"
+                                                th:class="${#fields.hasErrors('contacts[0].contact.address.subBuilding')}? text-danger">Field Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="hidden">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.udprn">UDP Reference Number</label>
+                                        <div class="hidden">
+                                            <input class="hidden" type="text" name="udprn" id="contact0-udprn" placeholder="UDPRN" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.udprn}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.udprn')}"
+                                                th:errors="*{contacts[0].contact.address.udprn}" th:class="${#fields.hasErrors('contacts[0].contact.address.udprn')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.address.town')}? has-error">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.town">Post Town</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control" type="text" name="town" id="contact0-town" placeholder="Post Town" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.town}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.town')}"
+                                                th:errors="*{contacts[0].contact.address.town}" th:class="${#fields.hasErrors('contacts[0].contact.address.town')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group" th:class="${#fields.hasErrors('contacts[0].contact.address.county')}? has-error">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.county">County</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control" type="text" name="town" id="contact0-county" placeholder="County" readonly="false" tabindex="-1"
+                                                th:field="*{contacts[0].contact.address.county}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.county')}"
+                                                th:errors="*{contacts[0].contact.address.county}" th:class="${#fields.hasErrors('contacts[0].contact.address.county')}? text-danger">Field
+                                                Invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sx-12 col-sm-12 col-md-12">
+                                        <div class="row">
+                                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[0].contact.address.postcode">Postcode</label>
+                                            <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                                <input class="form-control postcode" type="text" name="postcode" id="contact0-postcode" placeholder="Postcode"
+                                                    th:field="*{contacts[0].contact.address.postcode}"></input> <span
+                                                    th:if="${#fields.hasErrors('contacts[0].contact.address.postcode')}" th:errors="*{contacts[0].contact.address.postcode}"
+                                                    th:class="${#fields.hasErrors('contacts[0].contact.address.postcode')}? text-danger">Field Invalid</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-sm-3 col-md-3 col-md-offset-4">
+                                                <button id="contact0-postcode-lookup" type="button" class="btn btn-primary postcode-lookup">Lookup</button>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-sm-3 col-md-3">
+                                                <button id="contact0-manual-lookup" type="button" value="Button" class="btn btn-primary">Manual Entry</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                            </div>
+
+                            <button id="contact0-address-present" type="button" class="form-group col-md-6 col-sm-12 btn btn-primary dialog-button postcode-lookup-address">Add
+                                Address</button>
+                        </div>
+                    </div>
+
+                    <div class="contact col-xs-12 col-sm-12 col-md-6 control-label">
+                        <h4>Contact 2</h4>
+                        <input type="hidden" id="contact-1-id" class="form-group col-md-12 col-sm-12" th:field="*{contacts[1].id}"></input>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contact-1-contactType">Contact Type:</label>
+                            <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" name="contact-1-contactType" id="contact-1-contactType" th:field="*{contacts[1].contactType.id}">
+                                    <option value="">-- Select Contact Type --</option>
+                                    <option th:each="i : ${contactTypeList}" th:value="${i.id}" th:text="${i}">Option...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contact-1-title">Title:</label>
+                            <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" name="contact-1-title" id="contact-1-title" th:field="*{contacts[1].contact.title.id}">
+                                    <option value="">-- Select Title --</option>
+                                    <option th:each="i : ${titleList}" th:value="${i.id}" th:text="${i}">Option...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.firstName')}? has-error">
+                            <label for="contacts[1].contact.firstName" class="col-xs-6 col-sm-4 col-md-4 control-label">First Name:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="First Name" th:field="*{contacts[1].contact.firstName}" id="contact-1-first-name"
+                                    name="contacts[1].contact.firstName" minlength="2" type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.surname')}? has-error">
+                            <label for="contacts[1].contact.surname" class="col-xs-6 col-sm-4 col-md-4 control-label">Surname:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Surname" th:field="*{contacts[1].contact.surname}" id="contact-1-surname"
+                                    name="contacts[1].contact.surname" minlength="2" type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.home')}? has-error">
+                            <label for="contacts[1].contact.home" class="col-xs-6 col-sm-4 col-md-4 control-label">Home:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Home" th:field="*{contacts[1].contact.home}" id="contact-1-home" name="contacts[1].contact.home"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.mobile')}? has-error">
+                            <label for="contacts[1].contact.mobile" class="col-xs-6 col-sm-4 col-md-4 control-label">Mobile:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Mobile" th:field="*{contacts[1].contact.mobile}" id="contact-1-mobile" name="contacts[1].contact.mobile"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.work')}? has-error">
+                            <label for="contacts[1].contact.work" class="col-xs-6 col-sm-4 col-md-4 control-label">Work:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Work" th:field="*{contacts[1].contact.work}" id="contact-1-work" name="contacts[1].contact.work"
+                                    type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.email')}? has-error">
+                            <label for="contacts[1].contact.email" class="col-xs-6 col-sm-4 col-md-4 control-label">Email:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Email" th:field="*{contacts[1].contact.email}" id="contact-1-email" name="contacts[1].contact.email"
+                                    type="email"></input>
+                            </div>
+                        </div>
+                        
+                       <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contactable')}? has-error">
+                            <label for="contact-1-contactable" class="col-xs-6 col-sm-4 col-md-4 control-label">Contactable:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="contact-1-contactable" id="contact-1-contactable" th:field="*{contacts[1].contactable}"></input>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" th:class="${#fields.hasErrors('contacts[1].preferred')}? has-error">
+                            <label for="contact-1-preferred" class="col-xs-6 col-sm-4 col-md-4 control-label">Preferred:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" type="checkbox" name="contact-1-preferred" id="contact-1-preferred" th:field="*{contacts[1].preferred}"></input>
+                            </div>
+                        </div>
+
+                        <div class="contact-dialog-container">
+                            <div id="contact1-address-form" class="form-group col-md-12 col-sm-12 contact-address-dialog postcode-lookup-address">
+                                <fieldsset> <legend>Contact 2 Address</legend>
+                                <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.address.line1')}? has-error">
+                                    <label for="contacts[1].contact.address.line1" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line1</label>
+                                    <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                        <input class="form-control" type="text" name="line1" id="contact1-line1" placeholder="Address Line1" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.line1}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.line1')}"
+                                            th:errors="*{contacts[1].contact.address.line1}" th:class="${#fields.hasErrors('contacts[1].contact.address.line1')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.address.line2')}? has-error">
+                                    <label for="contacts[1].contact.address.line2" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line2</label>
+                                    <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                        <input class="form-control" type="text" name="line2" id="contact1-line2" placeholder="Address Line2" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.line2}"></input> <span th:if="${#fields.hasErrors('contacts[0].contact.address.line2')}"
+                                            th:errors="*{contacts[1].contact.address.line2}" th:class="${#fields.hasErrors('contacts[1].contact.address.line2')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.address.line3')}? has-error">
+                                    <label for="contacts[1].contact.address.line3" class="col-xs-4 col-sm-4 col-md-4 control-label">Address Line3</label>
+                                    <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                        <input class="form-control" type="text" name="line3" id="contact1-line3" placeholder="Address Line3" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.line3}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.line3')}"
+                                            th:errors="*{contacts[1].contact.address.line3}" th:class="${#fields.hasErrors('contacts[1].contact.address.line3')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="hidden">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.line4">Address Line4</label>
+                                    <div class="hidden">
+                                        <input class="hidden" type="text" name="line4" id="contact1-line4" placeholder="Address Line4" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.line4}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.line4')}"
+                                            th:errors="*{contacts[1].contact.address.line4}" th:class="${#fields.hasErrors('contacts[1].contact.address.line4')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="hidden">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.line5">Address Line5</label>
+                                    <div class="hidden">
+                                        <input class="hidden" type="text" name="line5" id="contact1-line5" placeholder="Address Line5" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.line5}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.line5')}"
+                                            th:errors="*{contacts[1].contact.address.line5}" th:class="${#fields.hasErrors('contacts[1].contact.address.line5')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="hidden">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.buildingName">Building Name</label>
+                                    <div class="hidden">
+                                        <input class="hidden" type="text" name="buildingName" id="contact1-buildingName" placeholder="Building Name" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.buildingName}"></input> <span
+                                            th:if="${#fields.hasErrors('contacts[1].contact.address.buildingName')}" th:errors="*{contacts[1].contact.address.buildingName}"
+                                            th:class="${#fields.hasErrors('contacts[1].contact.address.buildingName')}? text-danger">Field Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="hidden">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.subBuilding">SubBuilding</label>
+                                    <div class="hidden">
+                                        <input class="hidden" type="text" name="subBuilding" id="contact1-subBuilding" placeholder="SubBuilding" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.subBuilding}"></input> <span
+                                            th:if="${#fields.hasErrors('contacts[1].contact.address.subBuilding')}" th:errors="*{contacts[1].contact.address.subBuilding}"
+                                            th:class="${#fields.hasErrors('contacts[1].contact.address.subBuilding')}? text-danger">Field Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.address.town')}? has-error">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.town">Post Town</label>
+                                    <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                        <input class="form-control" type="text" name="town" id="contact1-town" placeholder="Post Town" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.town}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.town')}"
+                                            th:errors="*{contacts[1].contact.address.town}" th:class="${#fields.hasErrors('contacts[1].contact.address.town')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" th:class="${#fields.hasErrors('contacts[1].contact.address.county')}? has-error">
+                                    <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.county">County</label>
+                                    <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                        <input class="form-control" type="text" name="town" id="contact1-county" placeholder="County" readonly="false" tabindex="-1"
+                                            th:field="*{contacts[1].contact.address.county}"></input> <span th:if="${#fields.hasErrors('contacts[1].contact.address.county')}"
+                                            th:errors="*{contacts[1].contact.address.county}" th:class="${#fields.hasErrors('contacts[1].contact.address.county')}? text-danger">Field
+                                            Invalid</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sx-12 col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <label class="col-xs-4 col-sm-4 col-md-4 control-label" for="contacts[1].contact.address.postcode">Postcode</label>
+                                        <div class="col-xs-8 col-sm-8 col-sm-8 col-md-8">
+                                            <input class="form-control postcode" type="text" name="postcode" id="contact1-postcode" placeholder="Postcode"
+                                                th:field="*{contacts[1].contact.address.postcode}"></input> <span
+                                                th:if="${#fields.hasErrors('contacts[1].contact.address.postcode')}" th:errors="*{contacts[1].contact.address.postcode}"
+                                                th:class="${#fields.hasErrors('contacts[1].contact.address.postcode')}? text-danger">Field Invalid</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 col-sm-3 col-sm-3 col-md-3 col-md-offset-4">
+                                            <button id="contact1-postcode-lookup" type="button" class="btn btn-primary postcode-lookup">Lookup</button>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-sm-3 col-md-3">
+                                            <button id="contact1-manual-lookup" type="button" value="Button" class="btn btn-primary">Manual Entry</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </fieldsset>
+                            </div>
+
+                            <button id="contact1-address-present" type="button" class="form-group col-md-6 col-sm-12 btn btn-primary dialog-button postcode-lookup-address">Add
+                                Address</button>
+                        </div>
+
+                    </div>
+                    </fieldsset>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-12">
+                    <fieldsset> <legend>Previous School</legend>
+                    <div class="form-group" th:class="${#fields.hasErrors('school')}? has-error">
+                            <label for="school" class="col-xs-6 col-sm-4 col-md-4 control-label">Previous School:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <select class="form-control" th:field="*{school}">
+                                    <option value="">-- Select Previous School --</option>
+                                    <option th:each="i : ${schoolList}" th:value="${i.id}" th:text="${i}">Option...</option>
+                                </select> <span th:if="${#fields.hasErrors('school')}" th:errors="*{school}" th:class="${#fields.hasErrors('school')}? text-danger">Field
+                                    Invalid</span>
+                            </div>
+                        </div>
+                    </fieldsset>
+                </div>
+
+				<div class="form-group col-md-6 col-sm-12">
+                    <fieldset>
+                        <legend>Student Details</legend>
+                        <div class="form-group" th:class="${#fields.hasErrors('uln')}? has-error">
+                            <label for="uln" class="col-xs-6 col-sm-4 col-md-4 control-label">Unique Learner No:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Unique Learner No" th:field="*{uln}" id="uln" name="uln" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('uci')}? has-error">
+                            <label for="uci" class="col-xs-6 col-sm-4 col-md-4 control-label">Unique Candidate Identifier:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="Unique Candidate Identifier" th:field="*{uci}" id="uci" name="uci" type="text" maxlength="13"></input>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                
+                <div class="form-group col-md-6 col-sm-12">
+                    <fieldset>
+                        <legend>Admissions Notes</legend>
+                        <div class="form-group" th:class="${#fields.hasErrors('admissionsNotes')}? has-error">
+                            <label for="admissionsNotes" class="col-xs-6 col-sm-4 col-md-4 control-label">Admissions Notes:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <textarea class="form-control" placeholder="Admissions Notes" th:field="*{admissionsNotes}" id="admissionsNotes" name="admissionsNotes" rows="5"
+                                    cols="30" type="text"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-12">
+                    <fieldsset> <legend>Course Requests</legend>
+                    <div>
+                        <div class="form-group" th:class="${#fields.hasErrors('requests[0].request')}? has-error">
+                            <label for="requests[0].request" class="col-xs-6 col-sm-4 col-md-4 control-label">1:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="1" th:field="*{requests[0].request}" id="request-1" name="requests[0].request" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('requests[1].request')}? has-error">
+                            <label for="requests[1].request" class="col-xs-6 col-sm-4 col-md-4 control-label">2:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="2" th:field="*{requests[1].request}" id="request-2" name="requests[1].request" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('requests[2].request')}? has-error">
+                            <label for="requests[2].request" class="col-xs-6 col-sm-4 col-md-4 control-label">3:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="3" th:field="*{requests[2].request}" id="request-3" name="requests[2].request" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="form-group" th:class="${#fields.hasErrors('requests[3].request')}? has-error">
+                            <label for="requests[3].request" class="col-xs-6 col-sm-4 col-md-4 control-label">4:</label>
+                            <div class="col-xs-6 col-sm-8 col-sm-8 col-md-8">
+                                <input class="form-control" placeholder="4" th:field="*{requests[3].request}" id="request-4" name="requests[3].request" type="text"></input>
+                            </div>
+                        </div>
+                    </div>
+                    </fieldsset>
+
+                </div>
+
+            </div>
+
+            <div class="row fixed-bottom-right">
+                <button type="submit" class="btn btn-primary" value="Submit">Save</button>
+                <button type="submit" class="btn btn-default" value="Submit">Cancel</button>
+            </div>
+
+        </form>
+
+        <script>
+                                    $("#application-form").validate();
+                                    
+                                   
+                                </script>
+
+        <!-- 		<div th:replace="fragments/dialogs/contact-form :: contact-dialog-form"></div> -->
+        <div th:replace="fragments/dialogs/address-list :: address-list-dialog"></div>
+
+    </div>
+
+</body>
+</html>

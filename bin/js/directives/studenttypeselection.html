@@ -1,0 +1,4 @@
+<select class="form-control input-sm" ng-model="ngModel">
+	<option>-- Select Option --</option>
+	<option ng-repeat="s in students" value="{{ s.id }}">{{ s.description }}</option>
+</select>
